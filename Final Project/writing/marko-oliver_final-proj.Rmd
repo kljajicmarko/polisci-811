@@ -1,0 +1,330 @@
+---
+title: "**PS 813 Final Project**"
+author: "Marko Kljajic & Oliver Lang"
+date: "May 6 2020"
+output: 
+  pdf_document:
+    keep_tex: true
+    number_sections: true # default is false
+geometry: margin=1.25in
+# compact-title: false
+fontsize: 12pt
+subparagraph: yes
+citecolor: black
+urlcolor: blue
+header-includes:
+  \usepackage[scaled=0.875]{helvet} % ss
+  \renewcommand{\ttdefault}{lmtt} %tt
+  \usepackage{longtable}
+  \usepackage{float}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+load(here::here("figures","figures.RDS"))
+load(here::here("data","clean_data.RDS"))
+library(knitr)
+library(here)
+```
+
+
+# Introduction
+
+Over the past fifteen years, Mexico has experienced a surge in violence, partly propelled by the state-coordinated militaristic crackdown on drug trafficking and organized crime known as the "War on Drugs". Rising violence has generated a nation-wide debate between the left (opponents of militarization) and the right (supporters of militarization) on the utility of using the military to combat drug trafficking. Critics of militarization refer to well-documented cases implicating military personnel in extrajudicial killings, enforced disappearances, torture, sexual violence, and other rights abuses (HRW 2011; 2018). While a majority of Mexicans are concerned about human rights violations, military intervention continues to receive popular support from much of the population (PEW 2012, 2017) partly due to mistrust in law enforcement and the inability of police to uphold public security. Supporters point to the popular demand for military intervention in order to justify keeping the military in the streets until police reform is successful. 
+
+However, popular demand for militarization is puzzling. Recent research suggests that the militarization of anti-drug efforts has decreased the state’s capacity to provide public order and extract fiscal resources: homicide and kidnapping rates have increased while tax collection has decreased (Flores-Macías 2018). If popular demand for militarization initially arose out of concern for personal security (Sotomayor 2013), it is unclear why this support has continued. Contrary to expectations of success, studies have shown that relying on the military for public security has resulted in higher levels of violence (Espinosa & Rubin 2015; Atuesta et al 2019) and other health-related issues (Aburto & Beltrán-Sánchez 2019; Michaelsen & Salardi 2020) without addressing organized crime in general (Shirk, Wallman, & Osrio 2015) and drug trafficking in particular (Lindo & Padilla-Romo 2018). Given the tension between positive expectations of military intervention for public security and the negative consequences of intervention, what strategies might exist to convey information about the negative effects of militarization in a fashion that is more persuasive? 
+
+# Theory
+
+Issue framing is a technique that can be used to change the evaluation of an policy issue by manipulating how it is presented and conveyed. Framing has been shown to have a signficant effect on shaping public attitudes across a range of policy issues (Jacoby 2000; Faricy & Ellis 2014; Corner et al 2011; Boettcher & Cobb 2006). On militarization in Mexico, for example, Romero, Magaloni, and Diaz-Cayeros (2015) found that pro-government framing of the success of military intervention against drug trafficking enhanced support for this policy, but only among individuals who did not experience drug-related victimization. 
+
+More recently, researchers have adapted insights from Moral Foundations Theory, a social-psychological theory that explains the origins of and variation in moral reasoning on politics and cultural issues (Graham et al 2011), to explore the possibility of whether specially framed political arguments, specifically those couched in the moral values of the target audience, are better at moving public opinion than those that are not. According to this theory, conservatives and liberals generally endorse and rely on different moral values when making political assessments and judgements. Liberals mainly focus on harm and fairness, whereas conservatives tend to treat issues related to loyalty, authority, and purity as more important (Haidt & Graham 2007; Graham, Haidt, & Nosek 2009). These political differences help to explain many of the disagreements between liberal and conservative judgements of right and wrong (Haidt 2012) and diverging attitudes on many social issues, including support for the military (Koleva et al 2012). 
+
+The most common framing technique used to lower support for using the military against drug trafficking highlight how intervention has increased violence and led to the violation of human rights. This frame resonates with liberal audiences for whom such issues might be more important because they violate notions of harm and fairness (Haidt & Graham 2007; Graham, Haidt, Nosek 2009). They might not resonate with supporters of military intervention who might consider violence and human rights violations as necessary byproducts of the "War on Drugs". This might partly explain why there is both concern for human rights violations but also steady support for militarization. Might another frame be more effective? Military personnel have also been charged with corruption and with cooperating with the very criminal organizations they were ordered to neutralize (HRW 2011; 2018). Would framing the consequences of military intervention in terms of collusion with cartels (violation of loyalty), conspiracy (violation of authority), and corruption (violation of purity) have a more powerful effect on modifying popular support for militarization? We conduct a survey experiment to test whether framing the outcomes of militarization in terms of violations of loyalty, authority, and purity lower public support for militarization compared to framing the issue in terms of harm and fairness violations. 
+
+# Data
+
+We recruited a random sample of university students (n = 661, 301 Male, 357 Female, and 3 Other) from seven different universities in Mexico during the winter of 2018. Participants were asked to complete a comprehensive pre-treatment instrument that included basic demographic information, experiences with drug-related victimization, various moral beliefs about the role of government in Mexico, and political ideology. 
+
+Participants were then randomly presented with a newspaper article that either frames the outcomes of a military intervention against drug trafficking as violating harm/fairness norms (control) versus loyalty/authority/purity norms (treatment). 
+
+```{r, echo = FALSE}
+
+control_text <- 'Last week, there were reports the Mexican military may have _violated human rights_ in responding to a gun battle in which 11 people were killed. The Mexican office of the U.N. High Commission for Human Rights said it obtained _documentation of torture, poor detention conditions and searches conducted without warrants_ after the intervention. Officers arrested at least 30 people after the shootout. A representative of the commission, called for the investigation of all deaths, _including those that occurred during police proceedings_. Mexico’s military has been embroiled in multiple _human rights_ scandals in recent decades, including _extrajudicial killings of gang members_ and the disappearances of citizens. The non-partisan commission will rule on these _human rights allegations_'
+
+treatment_text <- 'Last week, there were reports the Mexican military may have _cooperated with local criminal organizations_ in responding to a gun battle in which 11 people were killed. The Mexican office of the U.N. High Commission for Human Rights said it received _reports of collusion, conspiracy, and fabricated evidence_. Officers arrested at least 30 people after the shootout. A representative of the commission called for the investigation of all deaths and _raised concerns about containment of the armed forces by local criminal organizations_. Mexico’s military has been embroiled in multiple _corruption_ scandals in recent decades, including _working complicity with gangs_ in the  disappearance of citizens. The non-partisan commission will rule on these _corruption allegations_.' 
+
+text <- cbind.data.frame(control_text, treatment_text)
+colnames(text) <- c("Control", "Treatment")
+
+kable(text, align = 'l',format="markdown")
+```
+
+We used four dependent variables to evaluate the attitudes of participants post-treatment. Our dependent variables are presented in the table below. We measured participants' trust in the military from 1 ("Very Low Trust") to 11 ("Very High Trust"); support for the army's participation in the street and support for punishing soldiers involved in the crimes reported on a 7-point Likert-scale from 1 ("Strongly Disagree") to 7 ("Strongly Agree"); and whether participants' would change their opinion of the military if the report were to be confirmed (0 - "No", 1 - "Yes").
+
+```{r, echo=FALSE}
+trustarmy_text<-"To what extent do you trust the army?"
+army_participate_text<-"The army should keep participating in crime combat"
+punish_text<-"Soldiers that behave as mentioned by the experts should be severely punished"
+experts_text<-"If expert concerns were real, would you reconsider your opinion about the army?"
+
+outcome_text<-rbind.data.frame(trustarmy_text,army_participate_text,punish_text,experts_text)
+
+outcome_text<-cbind(c("Trust in army:", "Support for army participation:","Support for punishing soldiers:","Willingness to reconsider opnions:"),outcome_text)
+
+
+colnames(outcome_text) <- c("Variable", "Outcome Text")
+kable(outcome_text, align = 'l',format="markdown")
+
+```
+
+
+```{r, echo=FALSE,fig.width=10,fig.height=7,fig.cap="Covariate Imbalance in direction of treatment"}
+#Other balance plot
+par(mar=c(7,20,3,1))
+plot(NA,xlim=c(0,.2),ylim=c(0,length(sds_g)+2),yaxt='n',ylab="",
+     main="Covariate Imbalance in direction of treatment",
+     xlab="Standardized difference in means between treatment and control")
+for(i in 1:length(sds_g)){
+        lines(x=c(0,sds_g[i]-.002),y=c(i+1,i+1))
+}
+for(i in 1:length(sds_g)){
+        points(x=sds_g[i],y=i+1)
+}
+axis(2,at=1:length(sds_g)+1,labels=names(sds_g),las=2)
+abline(v=.15,lty="dashed")
+abline(v=.1,lty="dashed")
+abline(v=.05,lty="dashed")
+```
+
+
+
+```{r, echo=FALSE,fig.width=10,fig.height=5,fig.cap="Covariate Imbalance in direction of control"}
+par(mar=c(7,1,3,20))
+plot(NA,xlim=c(-.2,0),ylim=c(0,length(sds_l)+2),yaxt='n',ylab="",
+     main=" ",
+     xlab="Standardized difference in means between treatment and control")
+for(i in 1:length(sds_l)){
+        lines(x=c(0,sds_l[i]+.002),y=c(i+1,i+1))
+}
+for(i in 1:length(sds_l)){
+        points(x=sds_l[i],y=i+1)
+}
+axis(4,at=1:length(sds_l)+1,labels=names(sds_l),las=2)
+abline(v=-.1,lty="dashed")
+abline(v=-.05,lty="dashed")
+abline(v=-.15,lty="dashed")
+```
+
+# Estimation
+
+We chose to estimate our effects in three ways. First, we used the simple difference in means estimator. For our other two specifications, we adjusted for pre-treatment covariates. The motivation for adjustment was improving precision. We follow the procedure proposed by Lin (2013) for regression adjustment in randomized experiments. Lin showed that including centered pre-treatment covariates and their interactions with the treatment in the model either equals or improves on the asymptotic precision of the difference-in-means estimator. Additionally, the HC2 estsimator yields asymptotically valid confidence intervals. In contrast with traditional regression adjustment, this property holds under less stringent regularity conditions---neither linearity in the (our) parameters nor homoskedasticity is necessary. 
+
+Since data is missing for some covariates, we estimated our models twice. First, on data without any rows where covariates are missing, which is the default in most packages. Second, on data where missing observations are imputed using the imputation model proposed by Honaker et al. (2011). This method makes two assumptions. First that the joint distribution of the observed and missing data is multivariate normal. While we have many categorical variables in our data set whose values are not going to be normally distributed, the Amelia package provided by Honaker et al (2011). allows us to specify these variables which are then rescaled during the imputation process. The second assumption is that our observed data gives all the systematic information about whether a given observation will be missing (MAR). While we cannot be sure that this assumption is justified, the distribution of observed and imputed observations looks similar for covariates where a larger proportion of observations is missing (see appendix). While this does not confirm that the imputation model is correct, there are at least no glaring red flags that something is going wrong.
+
+```{r, echo=FALSE,fig.width=10}
+#trust army plot
+plot.new()
+par(mfrow=c(1,2),mar=c(5,20,5,5))
+plot_func<-function(title,estimates,conf_high,conf_low,scale){
+        par(mar=c(7,8,3,1))
+        plot(NA,xlim=c(-.6,.6),ylim=c(1,5),xlab=" \n (lines denote 95% CIs)",ylab="",
+             main=title,
+             cex.main = .9,cex.lab=.7,cex.axis=.8,
+             axes=F,type="b")
+        axis(2, 2:4, c("Difference in means","Lin \n Listwise Deletion","Lin \n Multiple Imputation"),
+             las=2,cex.axis=.7,tick = F)
+        axis(1, at=round(seq(-scale,scale,.2),1))
+        abline(v=0,col="gray")
+        abline(v=-.2,col="gray",lty="dashed")
+        abline(v=.2,col="gray",lty="dashed")
+        abline(v=.2,col="gray",lty="dashed")
+        abline(v=.2,col="gray",lty="dashed")
+        abline(v=.2,col="gray",lty="dashed")
+        abline(v=.2,col="gray",lty="dashed")
+        points(estimates,2:4,cex=1.5)
+        segments(conf_low,2:4,conf_high,2:4)  
+}
+
+plot_func("Effect on trust in army \n (measured on 11 point scale)",
+          trustarmy_estimates,trustarmy_low,trustarmy_high,1)
+plot_func("Effect on support for army participation \n (measured on 7 point scale)",
+          armyparticipate_estimates,armyparticipate_low,armyparticipate_high,1)
+```
+
+
+
+```{r, echo=FALSE,fig.width=10,fig.cap="Estimated treatment effects"}
+plot.new()
+par(mfrow=c(1,2))
+plot_func("Effect on support for punishing soldiers \n (measured on 7 point scale)",
+          punish_estimates,punish_low,punish_high,.6)
+plot_func("Effect on willingness to reconsider opinions \n (0 = not willing, 1 = willing)",
+          expert_estimates,expert_low,expert_high,.2)
+```
+
+# Results
+
+Figure three reports estimated treatment effects for each outcome. The only treatment effect that we estimate wiith high levels of precision is support for punishing soldiers. Across our three specifications, we estimate that treatment with the loyalty / authority / purity issue frame increases support for punishing soldiers on a 7-point scale by `r round(punish_estimates[3],2)` (multiple imputation & adjustment), `r round(punish_estimates[2],2)` (list-wise deletion & adjustment), and `r round(punish_estimates[1],2)` (difference-in-means). A `r round(punish_estimates[1],2)` shift on the scale is equivalent to `r round(punish_estimates[1]/sd(df$punish),1)` standard deviations. For each specification we estimate that there is a greater than 95 percent chance that an interval centered on the point estimates does not include zero.
+
+Most of this effect is coming from shifts at the upper end of this scale: esp. a large increase in the proportion of respondents who were extremely willing to punish soldiers. This is visible in the second line of the below figure. For all other outcomes we do not estimate an average treatment effect precisely and there seems to be few diifferences in the overall distribution of answers.
+ 
+```{r, echo=FALSE}
+plot.new()
+par(mfrow=c(2,2),mar=c(3,9,3,3))
+hist(df$trustarmy[df$treat==1],breaks=seq(0,11,1),col="light grey",border="dark grey",
+     main="Outcomes for \n treatment respondents",yaxt='n',xaxt='n',xlab="",ylab="")
+axis(1,at=c(.5,5.5,10.5),labels=c("Very low trust","","Very high trust"))
+axis(2,at=c(20),tick=FALSE,labels=c("Trust in Army"),las=2)
+hist(df$trustarmy[df$treat==0],breaks=seq(0,11,1),col="light grey",border="dark grey",
+     main="Outcomes for \n control respondents",yaxt='n',xaxt='n',xlab="",ylab="")
+axis(1,at=c(.5,5.5,10.5),labels=c("Very low trust","","Very high trust"))
+
+hist(df$armyparticipate[df$treat==1],breaks=seq(0,7,1),col="light grey",border="dark grey",
+     main="",yaxt='n',xaxt='n',xlab="",ylab="")
+axis(1,at=c(.5,3.5,6.5),labels=c("Str. disagree","","Str. agree"))
+axis(2,at=c(20),tick=FALSE,labels=c("Support for \n army participation"),las=2)
+hist(df$armyparticipate[df$treat==0],breaks=seq(0,7,1),col="light grey",border="dark grey",
+     main="",yaxt='n',xaxt='n',xlab="",ylab="",cex.axis=.7)
+axis(1,at=c(.5,3.5,6.5),labels=c("Str. disagree","","Str. agree"))
+
+
+```
+
+```{r, echo=FALSE,fig.capt="Distribution of responses by treatment group"}
+par(mfrow=c(2,2),mar=c(3,9,3,3))
+hist(df$punish[df$treat==1],breaks=seq(0,7,1),col="light grey",border="dark grey",
+     main="",yaxt='n',xaxt='n',xlab="",ylab="")
+axis(1,at=c(.5,3.5,6.5),labels=c("Str. disagree","","Str. agree"))
+axis(2,at=c(20),tick=FALSE,labels=c("Support for \n punishing soldiers"),las=2)
+hist(df$punish[df$treat==0],breaks=seq(0,7,1),col="light grey",border="dark grey",
+     main="",yaxt='n',xaxt='n',xlab="",ylab="")
+axis(1,at=c(.5,3.5,6.5),labels=c("Str. disagree","","Str. agree"))
+
+hist(df$expert[df$treat==1],breaks=3,col="light grey",border="dark grey",
+     main="",yaxt='n',xaxt='n',xlab="",ylab="")
+axis(1,at=c(0.25,0.75),labels=c("No","Yes"))
+axis(2,at=c(20),tick=FALSE,labels=c("Willingness to\n reconsider opnions"),las=2)
+hist(df$expert[df$treat==0],breaks=3,col="light grey",border="dark grey",
+     main="",yaxt='n',xaxt='n',xlab="",ylab="")
+axis(1,at=c(0.25,0.75),labels=c("No","Yes"))
+```
+
+
+
+# Conclusion:
+
+This study sought to test whether framing the consequences of military intervention in terms of corruption and conspiracy rather than human rights violations was more effective in modifying public support for militarization. We found that the framing condition did not have a statistically significant effect on trust in the military, support for army participation in combating drug trafficking, and willingness to change one's opinion about the issue, but they were in the predict direction. However, we did find a significant effect in the predicted direction (positive) for support for punishing soldiers who comitted the crimes in the treatment.
+
+
+# Work Cited
+
+ 
+
+Aburto, José Manuel, and Hiram Beltrán-Sánchez. 2019. “Upsurge of Homicides and Its Impact on Life Expectancy and Life Span Inequality in Mexico, 2005–2015.” American journal of public health 109(3): 483–89.
+
+ 
+
+Atuesta, Laura H, Oscar S Siordia, and Alejandro Madrazo Lajous. 2019. “The ‘War on Drugs’ in  Mexico:(Official) Database of Events between December 2006 and November 2011.”     Journal of conflict resolution 63(7): 1765–89.
+
+ 
+
+Boettcher III, William A, and Michael D Cobb. 2006. “Echoes of Vietnam? Casualty Framing and Public Perceptions of Success and Failure in Iraq.” Journal of Conflict Resolution 50(6): 831–54.
+
+ 
+
+Chong, Dennis, and James N Druckman. 2007. “Framing Theory.” Annu. Rev. Polit. Sci. 10: 103–26.
+
+ 
+
+Corner, Adam, Ezra Markowitz, and Nick Pidgeon. 2014. “Public Engagement with Climate Change: The Role of Human Values.” Wiley Interdisciplinary Reviews: Climate Change 5(3): 411–22.
+
+ 
+
+Espinosa, Valeria, and Donald B Rubin. 2015. “Did the Military Interventions in the Mexican     Drug War Increase Violence?” The American Statistician 69(1): 17–27.
+
+ 
+
+Faricy, Christopher, and Christopher Ellis. 2014. “Public Attitudes toward Social Spending in the United States: The Differences between Direct Spending and Tax Expenditures.” Political Behavior 36(1): 53–76.
+
+ 
+
+Flores-Macías, G. 2018. “The Consequences of Militarizing Anti-Drug Efforts for State    Capacity in Latin America: Evidence from Mexico.” Comparative Politics, 51(1), 1-20.
+
+ 
+
+Graham, Jesse, Haidt, J, Nosek B. 2009. “Liberals and Conservatives Rely on a Different Set of     Moral Foundations.”      Journal of Personality and Social Psychology 96(5), 1029-1045.
+
+ 
+
+Graham, Jesse et al. 2011. “Mapping the Moral Domain.” Journal of Personality and Social     Psychology 101(2), 366-385.
+
+ 
+
+Haidt, J., & Graham, J. 2007. “When morality opposes justice: Conservatives have moral  intuitions that liberals may not recognize.” Social Justice Research 20, 98-116.
+
+ 
+
+Haidt, J. 2012. The righteous mind: Why good people are divided by politics and religion.  Vintage.
+
+
+Honaker, James, Gary King, and Matthew Blackwell. "Amelia II: A program for missing data." Journal of statistical software 45.7 (2011): 1-47.
+ 
+
+Human Rights Watch. 2011. “Neither Rights nor Security: Killings, Torture, and Disappearances  in Mexico’s ‘War on Drugs.’” Human Rights Watch. Available at:      https://www.hrw.org/sites/default/files/reports/mexico1111webwcover_0.pdf.
+
+ 
+
+Human Rights Watch. 2018. “World Report 2018: Mexico.” Human Rights Watch. Available at: https://www.hrw.org/world-report/2018/country-chapters/mexico.
+
+ 
+
+Jacoby, William G. 2000. “Issue Framing and Public Opinion on Government Spending.” American Journal of Political Science: 750–67.
+
+
+Lin, Winston. "Agnostic notes on regression adjustments to experimental data: Reexamining Freedman’s critique." The Annals of Applied Statistics 7.1 (2013): 295-318.
+
+ 
+Lindo, Jason M, and María Padilla-Romo. 2018. “Kingpin Approaches to Fighting Crime and     Community Violence: Evidence from Mexico’s Drug War.” Journal of health economics      58: 253–68.
+
+ 
+Michaelsen, Maren M, and Paola Salardi. 2020. “Violence, Psychological Stress and Educational   Performance during the ‘War on Drugs’ in Mexico.” Journal of Development Economics      143: 102387.
+
+ 
+
+PEW. 2012. “Mexicans Back Military Campaign Against Cartels.” Available at: https://www.pewresearch.org/global/2012/06/20/mexicans-back-military-campaign-against-cartels/.
+
+ 
+
+PEW. 2017. “Mexicans are Downbeat About Their Country’s Direction.” Available at: https://www.pewresearch.org/global/2017/09/14/mexicans-are-downbeat-about-their-countrys-direction/.
+
+ 
+
+Romero, Vidal, Beatriz Magaloni, and Alberto Díaz-Cayeros. 2014. “The Mexican War on Drugs:  Crime and the Limits of Government Persuasion.” International Journal of Public Opinion      Research 27(1): 125–37.
+
+ 
+Shirk, D., & Wallman, J. 2015. “Understanding Mexico’s drug violence.” Journal of Conflict	Resolution, 59(8), 1348-1376.
+
+
+Sotomayor, Arthur. 2013. “Militarization in Mexico and its Implications” in Bow, Brian J. &    Cruz, Arturo Santa. The State and Security in Mexico: Transformation and Crisis in      Regional Perspective. London: Routledge.
+
+# Appendix 
+
+```{r, echo=FALSE,fig.width=12,fig.height=10, fig.cap="Missingness Plot"}
+load(here::here("figures","missingness_plot.RDS"))
+Amelia::missmap(multi_impute,y.cex=.8,col=c("white","dark grey"),main="")
+```
+
+
+```{r,echo=FALSE,fig.cap="Distriibution of imputed and observed observations"}
+par(mfrow=c(6,4))
+plot(multi_impute,cex.main=.7,cex.lab=.6)
+
+```
+
+
+
+
